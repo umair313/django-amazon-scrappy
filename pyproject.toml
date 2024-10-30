@@ -1,0 +1,10 @@
+[tool.black]
+line-length = 120
+
+[tool.isort]
+known_first_party = "project"
+skip = ["migrations", ".git", "__pycache__", "LC_MESSAGES", "locale", "build", "dist", ".github", ".tox", "venv", ".venv", "node_modules"]
+blocked_extensions = ["rst", "html", "js", "svg", "txt", "css", "scss", "png", "snap", "tsx", "sh"]
+lines_between_types = 1
+lines_after_imports = 2
+profile = "black"

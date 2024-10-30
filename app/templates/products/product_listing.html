@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Product List</h1>
+
+        <!-- Search form -->
+        <form method="GET" action="{% url 'product_list' %}">
+            <input
+                type="text"
+                name="q"
+                placeholder="Search by product title or brand"
+                value="{{ query }}"
+                class="search-input"
+            />
+            <button type="submit" class="search-button">Search</button>
+        </form>
+
+        <!-- Product list -->
+        <div class="product-list">
+            {% if products %}
+                {% for product in products %}
+                    <div class="product-item">
+                        <h2>{{ product.title }}</h2>
+                        <p><strong>ASIN:</strong> {{ product.asin }}</p>
+                        <p><strong>Brand:</strong> {{ product.brand.name }}</p>
+                        <img src="{{ product.image_url }}" alt="{{ product.title }}" width="150" />
+                        <p><a href="{{ product.product_url }}" target="_blank">View on Amazon</a></p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No products found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

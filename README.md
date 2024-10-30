@@ -9,35 +9,36 @@ https://www.gnu.org/software/make/
 - Copy ENV file `cp config/env/.env.example .env`
 - Update env variables
 
-### Pre Commit Hook
+Run the command to build and run the application
+- `make dev.build` : build containers
+- `make dev.up` : start containers in attached mode
 
-- Install pre-commit package: `pip3 install pre-commit`
-- Activate pre-commit hook: `pre-commit install`
+### create superuser
 
-## Commands
+make dev.dcshell
+```bash
+python manage.py createsuperuser
+```
 
-### To add a new package
+login to admin
+open `localhost:8001/admin`
 
-- put your package name & version in appropriate `config/requirements/*.in` file
-- run `make cr`
+### Add new Periodic Task
 
-### (dev | stage | prod) ENV. Specific Commands
-
-replace \* with appropriate ENV. name
-
-- `make *.build` : build containers
-- `make *.up.d` : start containers in detached mode
-- `make *.up` : start containers in attached mode
-- `make *.down` : stop containers and remove networks
-- `make *.restart` : firsts stop containers then start again
-- `make *.logs` : attach to log console of containers
-- `make *.dcshell` : open django container shell
-- `make *.dshell` : open django shell
-- `make *.ipshell` : open django ipython shell
-- `make *.makemigrations` : run `makemigrations` command in django container
-- `make *.migrate` : run `migrate` command in django container
-- `make *.collectstatic`: run `collectstatic` command in django container
-- `make *.psql` : run `psql` in postgres container
-- `make *.rediscli` : run `redis cli` in redis container
+open `http://localhost:8001/admin/django_celery_beat/periodictask/`
+- click on ADD Periodic Task
+- set name
+- from task drop down select `app.products.tasks.run_scrapper` 
+- Under schedule set Crontab Schedule
+  - minute: 0
+  - Hour(s): 0,6,12,18
+  - Days of the week: *
+  - Days of the Month: *
+  - Month of the year: *
+  - Cron Timezone: UTC
+ - save it.
 
 
+you can also run the task by selecting it.
+
+after running the task open http://localhost:8001/products/products/
